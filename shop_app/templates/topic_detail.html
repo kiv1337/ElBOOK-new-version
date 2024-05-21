@@ -3,7 +3,7 @@
 {% block content %}
 <style>
     body{
-        background-color: #fff;
+        background-image: url('../../avatars/y-so-serious-white.png');
     }
     .arrow-back {
         position: fixed;
@@ -12,7 +12,7 @@
     }
 </style>
 <a href="{% url 'forum' %}" class="btn waves-effect waves-light arrow-back"><i class="material-icons">arrow_back</i></a>
-<div>
+<div style="width: 70%; margin-left: 15%">
     <h2>{{ topic.название }}</h2>
     <div class="row">
         {% for post in posts %}
