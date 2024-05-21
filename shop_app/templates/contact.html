@@ -1,0 +1,59 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контактная информация для перевода денег</title>
+</head>
+<style>
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  h1 {
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  p:nth-last-of-type(2),
+  p:nth-last-of-type(1) {
+    opacity: 0;
+    animation: slideInRight 1s ease-out forwards;
+  }
+  
+</style>
+<body>
+    <h1>Важная информация</h1>
+    <p><strong>ИНН:</strong> 1234567890</p>
+    <p><strong>Номер карты:</strong> 1234 5678 9012 3456</p>
+    <p><strong>Номер телефона:</strong> +7 123 456-78-90</p>
+    <p><strong>Email:</strong> example@example.com</p>
+    <p><strong>Discord:</strong> gxttfried</p>
+    <p style="font-weight: 600;">Книга появится в вашем профиле после подтверждения оплаты!
+    </p>
+    <p>
+        В случае, если денежные средства  не поступили в течении 10 минут после покупки книги, запрос будет отклонён!
+    </p>
+</body>
+</html>
+{% endblock %}

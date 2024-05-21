@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body{
+        background-color: #fff;
+    }
+    .arrow-back {
+        position: fixed;
+        left: 20px;
+        z-index: 1000;
+    }
+</style>
+<a href="{% url 'forum' %}" class="btn waves-effect waves-light arrow-back"><i class="material-icons">arrow_back</i></a>
+<div>
+    <h2>{{ topic.название }}</h2>
+    <div class="row">
+        {% for post in posts %}
+            <div class="col s12">
+                <div class="card horizontal" style="opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards;">
+                    <div class="card-image">
+                        {% if post.author.userprofile.avatar %}
+                            <img src="{{ post.author.userprofile.avatar.url }}" alt="Avatar" style="width: 40px; height: 40px;">
+                        {% endif %}
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p style="font-weight: 600;">{{ post.author.username }}</p>
+                            <p style="word-break: break-all;">{{ post.сообщение }}</p>
+                            <p style="float:right; color: rgb(167, 167, 167)">{{ post.created_at }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <form method="post" action="{% url 'topic_detail' topic_id=topic.id %}" style="opacity: 0; transform: translateY(20px); animation: fadeInUp 0.5s ease forwards;">
+        {% csrf_token %}
+        <div class="input-field">
+            <textarea id="textarea1" class="materialize-textarea" name="сообщение" style="word-wrap: break-word; resize: none;" required></textarea>
+            <label for="textarea1">Напишите сообщение</label>
+        </div>
+        <button type="submit" class="btn waves-effect waves-light" style="display: block;">Отправить</button>
+    </form>
+</div>
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}

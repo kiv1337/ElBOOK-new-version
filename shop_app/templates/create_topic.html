@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    .arrow-back {
+        position: fixed;
+        left: 20px;
+        z-index: 1000;
+    }
+    .create-topic{
+      width: 50%;
+      margin: 0 auto;
+    }
+  </style>
+  <a href="{% url 'forum' %}" class="btn waves-effect waves-light arrow-back"><i class="material-icons">arrow_back</i></a>
+    <form  method="post" action="{% url 'create_topic' %}" class="create-topic">
+      <h2 >Добавление темы</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn waves-effect waves-light animated bounceIn modal-trigger" style="display: block;"><i class="material-icons right">add</i>Добавить</button>
+    </form>
+{% endblock %}

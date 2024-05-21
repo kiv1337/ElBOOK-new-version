@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-wrapper {
+        display: flex;
+    }
+
+    .filter {
+        flex: 0 0 auto;
+        margin-right: 20px;
+    }
+
+    .container {
+        flex: 1;
+    }
+
+    .books {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin: 0 auto;
+    }
+
+    .card {
+        flex: 0 0 calc(16.666% - 20px);
+        margin: 10px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+        width: 170px;
+        height: 250px;
+        border-radius: 5px;
+    }
+
+    .card a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .card p {
+        margin: 5px 0;
+        text-align: left;
+    }
+
+    select {
+        width: 100%;
+        display: block;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        background-color: white;
+        outline: none;
+    }
+
+    select:focus {
+        border-color: #26a69a;
+    }
+
+    select:hover {
+        border-color: #888;
+    }
+
+    @media (max-width: 992px) {
+        .card {
+            flex: 0 0 calc(25% - 20px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container-wrapper {
+            flex-direction: column;
+        }
+
+        .filter {
+            flex: 1;
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            flex: 0 0 calc(33.333% - 20px);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card {
+            flex: 0 0 calc(50% - 20px);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    #scrollUpBtn {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 99;
+        border: none;
+        outline: none;
+        background-color: #77DDE7;
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+    }
+
+    #scrollUpBtn:hover {
+        background-color: #008080;
+    }
+
+    #scrollDownBtn {
+        display: none;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        z-index: 99;
+        border: none;
+        outline: none;
+        background-color: #77DDE7;
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+    }
+
+    #scrollDownBtn:hover {
+        background-color: #008080;
+    }
+</style>
+
+<div class="container-wrapper">
+    <div class="filter">
+        <form method="get" action="">
+            <label for="genre">Жанр:</label>
+            <select name="genre" id="genre">
+                <option value="">Все жанры</option>
+                {% for genre_item in existing_genres.all %}
+                <option value="{{ genre_item.name }}" {% if genre_item.name == request.GET.genre %} selected {% endif %}>{{ genre_item.name }}</option>
+                {% endfor %}
+            </select>
+            <label for="author">Автор</label>
+            <select name="author" id="author">
+                <option value="">Все авторы</option>
+                {% for author_item in existing_authors %}
+                <option value="{{ author_item.author }}" {% if author_item.author == request.GET.author %} selected {% endif %}>{{ author_item.author }}</option>
+                {% endfor %}
+            </select>
+            <label for="release">Дата выпуска:</label>
+            <select name="release" id="release">
+                <option value="">-</option>
+                <option value="old" {% if request.GET.release == 'old' %}selected{% endif %}>Сначала старые</option>
+                <option value="new" {% if request.GET.release == 'new' %}selected{% endif %}>Сначала новые</option>
+            </select>
+            <button type="submit" class="btn waves-effect waves-light" style="margin-top: 2%;display: block; ">Применить<i class="material-icons right">filter_list</i></button>
+        </form>
+    </div>
+    <div class="container">
+        <div class="books">
+            {% for book in books %}
+            <div class="card">
+                <a href="{% url 'book_detail' book_id=book.id %}">
+                    <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                </a>
+                <a href="{% url 'book_detail' book_id=book.id %}">
+                    <p>{{ book.title }}</p>
+                    <p style="color: gray;">{{ book.author }}</p>
+                    <p>{{ book.average_rating }}</p>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<button style="display: block;" id="scrollUpBtn" onclick="scrollToTop()"><i class="material-icons">arrow_upward</i></button>
+<button style="display: block;" id="scrollDownBtn" onclick="scrollToBottom()"><i class="material-icons">arrow_downward</i></button>
+<script>
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("scrollUpBtn").style.display = "block";
+        } else {
+            document.getElementById("scrollUpBtn").style.display = "none";
+        }
+
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+            document.getElementById("scrollDownBtn").style.display = "none";
+        } else {
+            document.getElementById("scrollDownBtn").style.display = "block";
+        }
+    }
+
+    function scrollToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+    function scrollToBottom() {
+        window.scrollTo(0,document.body.scrollHeight);
+    }
+</script>
+{% endblock %}

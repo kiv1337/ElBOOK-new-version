@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .forum-container {
+        max-width: 800px;
+        margin: 0 auto;
+        animation: slideInUp 0.5s ease;
+    }
+    
+    .forum-filter-form {
+        margin-top: 30px;
+        animation: slideInLeft 0.5s ease;
+    }
+    
+    .topics-list {
+        margin-bottom: 20px;
+    }
+    
+    .topic-item {
+        border: 1px solid #ddd;
+        padding: 30px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: #f0f0f0;
+        animation: slideInRight 0.5s ease;
+    }
+    
+    .topic-link {
+        text-decoration: none;
+        color: #0066cc;
+        font-weight: bold;
+    }
+    .topic-link:hover {
+        border-bottom: solid 1px;
+    }
+
+    @keyframes slideInUp {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+</style>
+<div class="forum-container">
+    <form method="get" action="{% url 'forum' %}" class="forum-filter-form">
+        <label for="тег" class="forum-filter-label">Фильтр по тегу:</label>
+        <select name="тег" id="тег" class="forum-filter-select" style="display: block;">
+            <option value="" {% if not тег_filter %}selected{% endif %}>Все теги</option>
+            {% for тег in теги %}
+                <option value="{{ тег }}" {% if тег_filter == тег %}selected{% endif %}>{{ тег }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn waves-effect waves-light" style="margin: 2%;display: block; ">Применить<i class="material-icons right">filter_list</i></button>
+    </form>
+    <a href="{% url 'create_topic' %}" class="create-topic-button">Добавить тему</a>
+    <div class="topics-list">
+        {% for topic in topics %}
+            {% if тег_filter and тег_filter == topic.тег or not тег_filter %}
+                <div class="topic-item">
+                    <a href="{% url 'topic_detail' topic_id=topic.id %}" class="topic-link">{{ topic.название }}</a><br>
+                    <small style="color:black" >#{{ topic.тег }} </small>
+                    <p style="float:right;">{{ topic.created_at }} | {{ topic.creator.username }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

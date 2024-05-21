@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .profile-container {
+        margin: 0 auto;
+        max-width: 600px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgb(110, 110, 110);
+    }
+    
+    .avatar-container {
+        margin-bottom: 20px;
+    }
+
+    .avatar {
+        width: 250px;
+        height: 250px;
+        border-radius: 5%;
+        object-fit: contain;
+        animation: flipInY 0.5s ease-in-out;
+        margin-top: 2%;
+    }
+    
+
+    .avatar-upload-form {
+        margin-top: 10px;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    h2, h3 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 10px;
+        animation: bounceIn 0.5s ease-in-out;
+    }
+
+    p {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #666;
+        font-size: 16px;
+        margin-bottom: 10px;
+        animation: lightSpeedIn 0.5s ease-in-out;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 5px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #039be5;
+    }
+
+    @keyframes flipInY {
+        from {
+            transform: perspective(400px) rotateY(90deg);
+            opacity: 0;
+        }
+        to {
+            transform: perspective(400px) rotateY(0deg);
+            opacity: 1;
+        }
+    }
+
+    @keyframes lightSpeedIn {
+        from {
+            transform: translate3d(100%, 0, 0) skewX(-30deg);
+            opacity: 0;
+        }
+        60% {
+            transform: skewX(20deg);
+            opacity: 1;
+        }
+        80% {
+            transform: skewX(-5deg);
+            opacity: 1;
+        }
+        to {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes bounceIn {
+        from,
+        20%,
+        40%,
+        60%,
+        80%,
+        to {
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        0% {
+            opacity: 0;
+            transform: scale3d(0.3, 0.3, 0.3);
+        }
+        20% {
+            transform: scale3d(1.1, 1.1, 1.1);
+        }
+        40% {
+            transform: scale3d(0.9, 0.9, 0.9);
+        }
+        60% {
+            opacity: 1;
+            transform: scale3d(1.03, 1.03, 1.03);
+        }
+        80% {
+            transform: scale3d(0.97, 0.97, 0.97);
+        }
+        to {
+            opacity: 1;
+            transform: scale3d(1, 1, 1);
+        }
+    }
+    .collection-item {
+        animation: lightSpeedIn 0.5s ease-in-out;
+    }
+    .topics-list {
+        margin-bottom: 20px;
+    }
+    
+    .topic-item {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #ffffff;
+        animation: slideInRight 0.5s ease;
+    }
+</style>
+
+<div class="profile-container">
+    <h2>Профиль</h2>
+    <p>Имя пользователя: {{ user.username }}</p>
+    <p>Электронная почта: {{ user.email }}</p>
+    <p>Дата регистрации: {{ user.date_joined }}</p>
+    <a href="{% url 'change_username' %}" class="btn waves-effect waves-light">Сменить имя пользователя</a>
+    
+    <a href="{% url 'change_email' %}" class="btn waves-effect waves-light">Сменить почту</a>
+    
+    <div class="avatar-container">
+        {% if user.userprofile.avatar %}
+        <img src="{{ user.userprofile.avatar.url }}" class="avatar" alt="Avatar">
+        {% else %}
+        <img src="../../avatars//Default.jpg" class="avatar" alt="Default Avatar">
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" class="avatar-upload-form">
+            {% csrf_token %}
+            <label for="id_avatar" class="btn waves-effect waves-light animated lightSpeedIn"> Выбрать файл
+                <i class="material-icons right">add_a_photo</i>
+            </label>
+            {{ avatar_form.avatar }}
+        </form>
+    </div>
+
+    {% if confirmed_purchases %}
+    <div class="row">
+        <h3>Мои книги ({{ purchased_books_count }} куплено):</h3>
+        <div class="col s12">
+            <ul class="collection">
+                {% for book in confirmed_purchases %}
+                <li class="collection-item">
+                    <div>
+                        {{ book.title }}
+                        <a href="{{ book.file.url }}" target="_blank" class="secondary-content" title="Просмотреть">
+                            <i class="material-icons">visibility</i>
+                        </a>
+                        <a href="{{ book.file.url }}" download class="secondary-content" title="Скачать" style="margin-right: 10px;">
+                            <i class="material-icons">file_download</i>
+                        </a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% else %}
+    <p>У вас пока нет купленных книг.</p>
+{% endif %}
+
+
+    <div class="topics-list">
+        <h3>Темы пользователя:</h3>
+        {% for topic in user.forumtopic_set.all %}
+            <div class="topic-item">
+                <a href="{% url 'topic_detail' topic_id=topic.id %}" class="topic-link">{{ topic.название }}</a>
+            </div>
+            {% empty %}
+            <p>Нет созданных тем</p>
+        {% endfor %}
+    </div>
+    
+    <a id="logoutBtn" href="#logoutConfirmationModal" class="btn waves-effect waves-light animated bounceIn modal-trigger">Выйти</a>
+</div>
+
+<div id="logoutConfirmationModal" class="modal">
+    <div class="modal-content">
+        <h4>Подтвердите выход из аккаунта</h4>
+        <p>Вы уверены, что хотите выйти из аккаунта?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="{% url 'logout' %}" class="modal-close btn waves-effect waves-light">Да</a>
+        <a href="#!" class="modal-close btn-flat waves-effect waves-light">Отмена</a>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', function(event) {
+        event.preventDefault();
+        var modalInstance = M.Modal.getInstance(document.getElementById('logoutConfirmationModal'));
+        modalInstance.open();
+    });
+</script>
+
+{% endblock %}

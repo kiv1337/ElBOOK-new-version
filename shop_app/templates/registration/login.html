@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container" style="max-width: 700px; box-shadow:0px 1px 3px #00bcd4; padding: 1%; margin-top: 3%">
+        <h2>Вход</h2>
+        <form class="col s12" method="post" action="">
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="username" type="text" name="username" class="validate" required minlength="3" maxlength="20">
+                    <label for="username">Имя пользователя:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" name="password" class="validate" required minlength="8" maxlength="20">
+                    <label for="password">Пароль:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    Нет аккаунта? <span><a href="{% url 'register' %}">Зарегистрируйтесь!</a></span>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light" type="submit" style="display: block;">Войти</button>
+                </div>
+            </div>
+            {% if error_message %}
+            <div class="row">
+                <div class="col s12 error-message">
+                    <p>{{error_message}}</p>
+                </div>
+            </div>
+        {% endif %}
+        </form>
+    </div>
+{% endblock %}
