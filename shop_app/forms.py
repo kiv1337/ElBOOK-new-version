@@ -32,7 +32,7 @@ class ForumPostForm(forms.ModelForm):
 from django import forms
 
 class ChangeUsernameForm(forms.Form):
-    new_username = forms.CharField(label='Новое имя пользователя', min_length=3, max_length=150)
+    new_username = forms.CharField(label='Новое имя пользователя', min_length=3, max_length=20)
 
 class ChangeEmailForm(forms.Form):
     new_email = forms.EmailField(label='Новая почта')
