@@ -50,6 +50,10 @@
             color: white;
             padding: 10px 20px;
             transition: color 0.3s, background-color 0.3s;
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         .nav-wrapper a::before {
@@ -102,6 +106,12 @@
             color: black;
         }
 
+        .site-title {
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -109,8 +119,8 @@
         <div class="nav-wrapper">
             <a href="#" data-target="mobile-demo" class="sidenav-trigger" style="margin-bottom: 4%;"><i class="material-icons">menu</i></a>
             <div style="font-weight: 700;" class="hide-on-med-and-down">
+                <span class="site-title"><a href="{% url 'catalog' %}">Elbooks</a></span>
                 <a href="{% url 'profile' %}">Профиль</a>
-                <a href="{% url 'catalog' %}">Каталог</a>
                 <a href="{% url 'forum' %}">Форум</a>
                 <a href="{% url 'contact' %}">Контакты</a>
                 <a href="{% url 'cart' %}">
@@ -129,8 +139,8 @@
     </nav>
 
     <ul class="sidenav" id="mobile-demo">
+        <li><a href="{% url 'catalog' %}">Elbooks</a></li>
         <li><a href="{% url 'profile' %}">Профиль</a></li>
-        <li><a href="{% url 'catalog' %}">Каталог</a></li>
         <li><a href="{% url 'forum' %}">Форум</a></li>
         <li><a href="{% url 'contact' %}">Контакты</a></li>
         <li><a href="{% url 'cart' %}">
