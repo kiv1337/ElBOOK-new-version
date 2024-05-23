@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from shop_app.views import register, auth, catalog, profile, logOut, book_detail, add_to_cart, cart, purchase, remove_from_cart, add_review, forum_view, create_topic_view, topic_detail_view, contact, change_email, change_username
+from shop_app.views import register, auth, catalog, profile, logOut, book_detail, add_to_cart, cart, purchase, remove_from_cart, add_review, forum_view, create_topic_view, topic_detail_view, contact, change_email, change_username, buy_now
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -23,6 +23,7 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('change_username/', change_username, name='change_username'),
     path('change_email/', change_email, name='change_email'),
+    path('buy_now/<int:book_id>/', buy_now, name='buy_now'),
 ] 
 
 if settings.DEBUG:

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from .models import Book, Cart, PurchaseRequest
-from django.db.models import Q
+from .models import Book, Cart, PurchaseRequest, Genre, UserProfile, Review, ForumTopic, ForumPost
+from django.db.models import Q, Avg
 from django.http import HttpResponse
+from .forms import AvatarForm, ReviewForm, ForumTopicForm, ForumPostForm, ChangeUsernameForm, ChangeEmailForm
 
 
 def login_required(view_func):
@@ -13,9 +14,11 @@ def login_required(view_func):
         return view_func(request, *args, **kwargs)
     return wrapper
 
-from django.contrib import messages
 
 def register(request):
+    if request.user.is_authenticated:
+        return HttpResponse("Вы уже вошли в аккаунт.")
+    
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -61,7 +64,6 @@ def logOut(request):
     logout(request)
     return redirect(auth)
 
-from .models import Genre
 
 def catalog(request):
     query = request.GET.get('q')
@@ -97,9 +99,6 @@ def catalog(request):
     return render(request, 'catalog.html', {'books': books, 'query': query, 'existing_genres': existing_genres, 'existing_authors': existing_authors})
 
 
-
-from django.db.models import Avg
-
 def book_detail(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     average_rating = Review.objects.filter(book=book).aggregate(Avg('rating'))['rating__avg']
@@ -125,6 +124,20 @@ def add_to_cart(request, book_id):
         cart.save()
 
     return redirect('book_detail', book_id=book.id)
+
+@login_required
+def buy_now(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    user = request.user
+
+    if PurchaseRequest.objects.filter(user=user, books=book, confirmed=True).exists():
+        return redirect('catalog')
+
+    purchase_request = PurchaseRequest.objects.create(user=user, confirmed=False)
+    purchase_request.books.add(book)
+    purchase_request.save()
+
+    return redirect('profile')
 
 
 @login_required
@@ -170,10 +183,6 @@ def purchase(request):
 
     return redirect('cart')
 
-from .models import UserProfile
-
-from .forms import AvatarForm
-
 
 @login_required
 def profile(request):
@@ -203,9 +212,6 @@ def profile(request):
     })
 
 
-from .forms import ReviewForm
-from .models import Review
-
 @login_required
 def add_review(request, book_id):
     book = get_object_or_404(Book, id=book_id)
@@ -226,8 +232,6 @@ def add_review(request, book_id):
     
     return render(request, 'book_detail.html', {'book': book, 'review_form': form})
 
-from .models import ForumTopic, ForumPost
-from .forms import ForumTopicForm, ForumPostForm
 
 def forum_view(request):
     topics = ForumTopic.objects.all()
@@ -266,15 +270,10 @@ def topic_detail_view(request, topic_id):
         form = ForumPostForm()
     return render(request, 'topic_detail.html', {'topic': topic, 'posts': posts, 'form': form})
 
-from django.shortcuts import render
 
 def contact(request):
     return render(request, 'contact.html')
 
-
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-from .forms import ChangeUsernameForm, ChangeEmailForm
 
 def change_username(request):
     if request.method == 'POST':
@@ -291,6 +290,7 @@ def change_username(request):
         form = ChangeUsernameForm()
     return render(request, 'change_username.html', {'form': form})
 
+
 def change_email(request):
     if request.method == 'POST':
         form = ChangeEmailForm(request.POST)
@@ -305,4 +305,3 @@ def change_email(request):
     else:
         form = ChangeEmailForm()
     return render(request, 'change_email.html', {'form': form})
-

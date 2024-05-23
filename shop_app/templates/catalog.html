@@ -37,6 +37,8 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         transition: box-shadow 0.3s ease;
         animation: fadeIn 0.5s ease;
+        position: relative;
+        height: 420px;
     }
 
     .card:hover {
@@ -76,6 +78,14 @@
 
     select:hover {
         border-color: #888;
+    }
+
+    .buy-now-btn {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 20px);
     }
 
     @media (max-width: 992px) {
@@ -190,16 +200,52 @@
                 <a href="{% url 'book_detail' book_id=book.id %}">
                     <p>{{ book.title }}</p>
                     <p style="color: gray;">{{ book.author }}</p>
-                    <p>{{ book.average_rating }}</p>
                 </a>
+                <form method="post" action="{% url 'buy_now' book_id=book.id %}">
+                    {% csrf_token %}
+                    <button type="button" class="btn waves-effect waves-light buy-now-btn" style="display: block;">Купить сейчас</button>
+                </form>
             </div>
             {% endfor %}
         </div>
     </div>
 </div>
+
+<div id="buyNowConfirmationModal" class="modal">
+    <div class="modal-content">
+        <h4>Подтвердите покупку книги</h4>
+        <p>Вы уверены, что хотите приобрести книгу?</p>
+    </div>
+    <div class="modal-footer">
+        <form id="buyNowForm" method="post" style="display: flex; justify-content: space-between;">
+            {% csrf_token %}
+            <button type="submit" class="btn waves-effect waves-light" style="display: block;">Да</button>
+            <a href="#!" class="modal-close btn-flat waves-effect waves-light">Отмена</a>
+        </form>
+    </div>
+</div>
+
+
 <button style="display: block;" id="scrollUpBtn" onclick="scrollToTop()"><i class="material-icons">arrow_upward</i></button>
 <button style="display: block;" id="scrollDownBtn" onclick="scrollToBottom()"><i class="material-icons">arrow_downward</i></button>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+
+        document.querySelectorAll('.buy-now-btn').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                var formAction = button.closest('form').getAttribute('action');
+                var modal = document.getElementById('buyNowConfirmationModal');
+                var instance = M.Modal.getInstance(modal);
+                var buyNowForm = document.getElementById('buyNowForm');
+                buyNowForm.setAttribute('action', formAction);
+                instance.open();
+            });
+        });
+    });
+
     window.onscroll = function() {scrollFunction()};
 
     function scrollFunction() {
