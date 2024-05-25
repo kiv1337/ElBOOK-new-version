@@ -29,7 +29,6 @@ class ForumPostForm(forms.ModelForm):
         model = ForumPost
         fields = ['сообщение']
         
-from django import forms
 
 class ChangeUsernameForm(forms.Form):
     new_username = forms.CharField(label='Новое имя пользователя', min_length=3, max_length=20)
