@@ -222,12 +222,6 @@
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
     });
-
-    document.getElementById('logoutBtn').addEventListener('click', function(event) {
-        event.preventDefault();
-        var modalInstance = M.Modal.getInstance(document.getElementById('logoutConfirmationModal'));
-        modalInstance.open();
-    });
 </script>
 
 {% endblock %}
