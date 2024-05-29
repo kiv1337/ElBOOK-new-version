@@ -89,13 +89,6 @@ def catalog(request):
     elif release_filter == 'new':
         books = books.order_by('-release_date')
 
-    for book in books:
-        average_rating = Review.objects.filter(book=book).aggregate(Avg('rating'))['rating__avg']
-        if average_rating is None:
-            book.average_rating = "Нет оценок"
-        else:
-            book.average_rating = round(average_rating, 1)
-
     return render(request, 'catalog.html', {'books': books, 'query': query, 'existing_genres': existing_genres, 'existing_authors': existing_authors})
 
 
