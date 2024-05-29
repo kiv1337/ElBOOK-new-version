@@ -299,19 +299,6 @@
         window.scrollTo(0,document.body.scrollHeight);
     }
 </script>
-<div id="addToCartConfirmationModal" class="modal">
-  <div class="modal-content">
-      <h4>Подтвердите добавление в корзину</h4>
-      <p>Вы уверены, что хотите добавить эту книгу в корзину?</p>
-  </div>
-  <div class="modal-footer">
-      <form id="addToCartForm" method="post" action="{% url 'add_to_cart' book.id %}">
-          {% csrf_token %}
-          <a href="#!" class="modal-close btn-flat waves-effect waves-light">Отмена</a>
-          <button type="submit" class="btn waves-effect waves-light">Да</button>
-      </form>
-  </div>
-</div>
 
 <script>
 
