@@ -1,13 +1,13 @@
 from django import forms
 from .models import UserProfile, ForumTopic, ForumPost, Review
 
+
 class AvatarForm(forms.ModelForm):
     avatar = forms.ImageField(label='', widget=forms.FileInput(attrs={'class': 'custom-file-input', 'onchange': 'form.submit();'}))
     
     class Meta:
         model = UserProfile
         fields = ['avatar']
-
 
 
 class ReviewForm(forms.ModelForm):
@@ -24,6 +24,7 @@ class ForumTopicForm(forms.ModelForm):
         model = ForumTopic
         fields = ['название', 'тег']
 
+
 class ForumPostForm(forms.ModelForm):
     class Meta:
         model = ForumPost
@@ -32,6 +33,7 @@ class ForumPostForm(forms.ModelForm):
 
 class ChangeUsernameForm(forms.Form):
     new_username = forms.CharField(label='Новое имя пользователя', min_length=3, max_length=20)
+
 
 class ChangeEmailForm(forms.Form):
     new_email = forms.EmailField(label='Новая почта')

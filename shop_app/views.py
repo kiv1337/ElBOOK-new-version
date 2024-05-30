@@ -118,6 +118,7 @@ def add_to_cart(request, book_id):
 
     return redirect('book_detail', book_id=book.id)
 
+
 @login_required
 def buy_now(request, book_id):
     book = get_object_or_404(Book, id=book_id)
@@ -144,6 +145,7 @@ def remove_from_cart(request, book_id):
         cart.save()
     
     return redirect('cart')
+
 
 @login_required
 def cart(request):

@@ -1,171 +1,206 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Elbooks{% endblock %}</title>
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
 
     <style>
-        .error-message {
-            background-color: #ffebee;
-            color: #c62828;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            border: 1px solid #c62828;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            background-color: #f0f0f0;
-            background-image: url('../../avatars//y-so-serious-white.png');
-            background-repeat: repeat; 
-        }
-        
-        main {
-            padding: 10px;
-            margin: 0 auto;
-        }
+      .error-message {
+        background-color: #ffebee;
+        color: #c62828;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+        border: 1px solid #c62828;
+      }
 
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }        
-        .nav-wrapper a {
-            position: relative;
-            text-decoration: none;
-            color: white;
-            padding: 10px 20px;
-            transition: color 0.3s, background-color 0.3s;
-            font-family: 'Georgia', serif;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .nav-wrapper a::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #ffeb3b;
-            transition: width 0.3s;
-        }
-        
-        .nav-wrapper a:hover {
-            color: #fdff6d;
-        }
-        
-        .nav-wrapper a:hover::before {
-            width: 100%;
-        }
-        
-        .nav-wrapper form {
-            display: flex;
-            align-items: center;
-        }
-        .input-field {
-            margin: 0;
-            position: relative;
-        }
-        input[type="search"] {
-            padding-left: 40px;
-            margin: 10px;
-            border-radius: 20px;
-            border: none;
-            outline: none;
-            background-color: white;
-        }
-        .label-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
-        }
-        button[type="submit"] {
-            display: none;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+        background-color: #f0f0f0;
+        background-image: url("../../avatars//y-so-serious-white.png");
+        background-repeat: repeat;
+      }
 
-        .sidenav a {
-            color: black;
-        }
+      main {
+        padding: 10px;
+        margin: 0 auto;
+      }
 
-        .site-title {
-            font-family: 'Georgia', serif;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
+      .nav-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+      }
+      .nav-wrapper a {
+        position: relative;
+        text-decoration: none;
+        color: white;
+        padding: 10px 20px;
+        transition: color 0.3s, background-color 0.3s;
+        font-family: "Georgia", serif;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .nav-wrapper a::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #ffeb3b;
+        transition: width 0.3s;
+      }
+
+      .nav-wrapper a:hover {
+        color: #fdff6d;
+      }
+
+      .nav-wrapper a:hover::before {
+        width: 100%;
+      }
+
+      .nav-wrapper form {
+        display: flex;
+        align-items: center;
+      }
+      .input-field {
+        margin: 0;
+        position: relative;
+      }
+      input[type="search"] {
+        padding-left: 40px;
+        margin: 10px;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        background-color: white;
+      }
+      .label-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+      }
+      button[type="submit"] {
+        display: none;
+      }
+
+      .sidenav a {
+        color: black;
+      }
+
+      .site-title {
+        font-family: "Georgia", serif;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <ul id="dropdown1" class="dropdown-content">
-        <li><a href="{% url 'profile' %}" style="color: black;">Профиль</a></li>
-        <li><a href="{% url 'register' %}"  style="color: black;">Регистрация</a></li>
-        <li><a href="{% url 'auth' %}"  style="color: black;">Авторизация</a></li>
-      </ul>
-    <nav style="background: linear-gradient(to right, #26a69a, #00bcd4);">
-        <div class="nav-wrapper">
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger" style="margin-bottom: 4%;"><i class="material-icons">menu</i></a>
-            <div style="font-weight: 700;" class="hide-on-med-and-down">
-                <a class="dropdown-trigger" href="#!" data-target="dropdown1" style="display: inline-flex; align-items: center;">
-                    Профиль <i class="material-icons">arrow_drop_down</i>
-                </a>
-                <span class="site-title"><a href="{% url 'catalog' %}">Каталог</a></span>
-                <a href="{% url 'forum' %}">Форум</a>
-                <a href="{% url 'contact' %}">Контакты</a>
-                <a href="{% url 'cart' %}">
-                    <i class="fas fa-shopping-cart"></i>
-                    {% if cart_count > 0 %}({{ cart_count }}){% endif %}
-                </a>
-            </div>  
-            <form method="get" action="{% url 'catalog' %}">
-                <div class="input-field">
-                    <input id="search" type="search" name="q" placeholder="Поиск" value="{% if query %}{{ query }}{% endif %}">
-                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                    <i class="material-icons">close</i>
-                </div>
-            </form>
+      <li><a href="{% url 'profile' %}" style="color: black">Профиль</a></li>
+      <li>
+        <a href="{% url 'register' %}" style="color: black">Регистрация</a>
+      </li>
+      <li><a href="{% url 'auth' %}" style="color: black">Авторизация</a></li>
+    </ul>
+    <nav style="background: linear-gradient(to right, #26a69a, #00bcd4)">
+      <div class="nav-wrapper">
+        <a
+          href="#"
+          data-target="mobile-demo"
+          class="sidenav-trigger"
+          style="margin-bottom: 4%"
+          ><i class="material-icons">menu</i></a
+        >
+        <div style="font-weight: 700" class="hide-on-med-and-down">
+          <a
+            class="dropdown-trigger"
+            href="#!"
+            data-target="dropdown1"
+            style="display: inline-flex; align-items: center"
+          >
+            Профиль <i class="material-icons">arrow_drop_down</i>
+          </a>
+          <span class="site-title"
+            ><a href="{% url 'catalog' %}">Каталог</a></span
+          >
+          <a href="{% url 'forum' %}">Форум</a>
+          <a href="{% url 'contact' %}">Контакты</a>
+          <a href="{% url 'cart' %}">
+            <i class="fas fa-shopping-cart"></i>
+            {% if cart_count > 0 %}({{ cart_count }}){% endif %}
+          </a>
         </div>
+        <form method="get" action="{% url 'catalog' %}">
+          <div class="input-field">
+            <input
+              id="search"
+              type="search"
+              name="q"
+              placeholder="Поиск"
+              value="{% if query %}{{ query }}{% endif %}"
+            />
+            <label class="label-icon" for="search"
+              ><i class="material-icons">search</i></label
+            >
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
     </nav>
 
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="{% url 'catalog' %}">Каталог</a></li>
-        <li><a href="{% url 'profile' %}">Профиль</a></li>
-        <li><a href="{% url 'forum' %}">Форум</a></li>
-        <li><a href="{% url 'contact' %}">Контакты</a></li>
-        <li><a href="{% url 'cart' %}">
-            <i class="fas fa-shopping-cart"></i>
-            {% if cart_count > 0 %}({{ cart_count }}){% endif %}
-        </a></li>
+      <li><a href="{% url 'catalog' %}">Каталог</a></li>
+      <li><a href="{% url 'profile' %}">Профиль</a></li>
+      <li><a href="{% url 'forum' %}">Форум</a></li>
+      <li><a href="{% url 'contact' %}">Контакты</a></li>
+      <li>
+        <a href="{% url 'cart' %}">
+          <i class="fas fa-shopping-cart"></i>
+          {% if cart_count > 0 %}({{ cart_count }}){% endif %}
+        </a>
+      </li>
     </ul>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    <main>{% block content %}{% endblock %}</main>
 
     <script>
-        $(".dropdown-trigger").dropdown();
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems);
-        });
+      $(".dropdown-trigger").dropdown();
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".sidenav");
+        var instances = M.Sidenav.init(elems);
+      });
     </script>
-</body>
+  </body>
 </html>

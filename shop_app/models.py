@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class UserProfile(models.Model):
@@ -36,7 +37,6 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-
    
 
 class Cart(models.Model):
@@ -49,7 +49,6 @@ class Cart(models.Model):
 
     def total_cost(self):
         return sum(book.cost for book in self.books.all())
-    
     
 
 class PurchaseRequest(models.Model):
@@ -73,9 +72,6 @@ class PurchaseRequest(models.Model):
         self.confirmed = True
         self.save()
 
-
-
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

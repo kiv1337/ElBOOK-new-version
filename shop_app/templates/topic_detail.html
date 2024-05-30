@@ -7,6 +7,16 @@
         left: 20px;
         z-index: 1000;
     }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 <a href="{% url 'forum' %}" class="btn waves-effect waves-light arrow-back"><i class="material-icons">arrow_back</i></a>
 <div style="width: 70%; margin-left: 15%">
@@ -40,16 +50,4 @@
         <button type="submit" class="btn waves-effect waves-light" style="display: block;">Отправить</button>
     </form>
 </div>
-<style>
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
 {% endblock %}
