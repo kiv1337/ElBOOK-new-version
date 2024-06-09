@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Book, PurchaseRequest, Review, ForumPost, ForumTopic, Genre
 
 class PurchaseRequestAdmin(admin.ModelAdmin):
-    list_display = ('user', 'get_books', 'confirmed', 'rejected')
+    list_display = ('id' ,'user', 'get_books', 'confirmed', 'rejected')
 
     def get_books(self, obj):
         return ", ".join([book.title for book in obj.books.all()])
