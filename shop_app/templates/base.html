@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Elbooks{% endblock %}</title>
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
@@ -41,7 +41,7 @@
         padding: 0;
         color: #333;
         background-color: #f0f0f0;
-        background-image: url("../../avatars//y-so-serious-white.png");
+        background-image: url('{% static "images/y-so-serious-white.png" %}');
         background-repeat: repeat;
       }
 
@@ -97,8 +97,8 @@
       }
       input[type="search"] {
         padding-left: 40px;
-        margin: 10px;
         border-radius: 20px;
+        margin-top: 10%;
         border: none;
         outline: none;
         background-color: white;
@@ -163,7 +163,7 @@
           </a>
         </div>
         <form method="get" action="{% url 'catalog' %}">
-          <div class="input-field">
+          <div class="input-field" style="margin-top: 13px;">
             <input
               id="search"
               type="search"

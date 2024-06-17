@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %}
+{% load static %}
 <style>
   .profile-container {
     margin: 0 auto;
@@ -156,7 +157,7 @@
     {% if user.userprofile.avatar %}
     <img src="{{ user.userprofile.avatar.url }}" class="avatar" alt="Avatar" />
     {% else %}
-    <img src="../../avatars//Default.jpg" class="avatar" alt="Default Avatar" />
+    <img src="{% static 'images/Default.jpg' %}" class="avatar" alt="Default Avatar" />
     {% endif %}
     <form
       method="post"
